@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Implementasi API</title>
+</head>
+<body>
+
+    <h1 id="title">HALO INI PESAN DEFAULT</h1>
+    <hr>
+    <p> Isikan pesan dibawah ini untuk mengganti judul. </p>
+    <input id="message-input" type="text">
+    <button>Kirim</button>
+
+    <!--Imported scripts-->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" 
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" 
+    crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!--Page scripts-->
+    <script>
+        $(document).ready(() => {
+            axios.get('http://localhost:3000')
+                .then((response) => {
+                    let data = response.data
+                    $('#title').text(data.message)
+                })
+        })
+
+        $('button#send').on('click', () => {
+            let messageInputValue = $('input#message-input').val()
+            axios.post('http://localhost:3000', {
+                message: messageInputValue
+            }).then((response) => {
+                let data = response.data
+                $('#title').text(data.message)
+            })
+        })
+    </script>
+        
+
+</body>
+</html>
+
